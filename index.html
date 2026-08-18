@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0d63d8">
+<title>SNS Technician App</title>
+<link rel="manifest" href="manifest.json">
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:#07182b;
+  color:#fff;
+  font-family:Arial,Helvetica,sans-serif;
+}
+.app{
+  max-width:760px;
+  margin:auto;
+  min-height:100vh;
+  padding-bottom:100px;
+}
+.top{
+  background:linear-gradient(135deg,#064a91,#0b5ad1 60%,#7929df);
+  padding:25px 20px 32px;
+  border-radius:0 0 34px 34px;
+}
+.head{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.logo{
+  width:105px;height:92px;
+  border-radius:25px;
+  background:#fff;
+  object-fit:contain;
+  border:3px solid #fff;
+}
+.title{flex:1}
+.title h2{margin:0;font-size:25px}
+.title p{margin:5px 0;color:#d4e5ff;font-weight:700;font-size:13px}
+.actions{display:flex;gap:10px}
+.smallbtn{
+  width:auto;
+  padding:13px 18px;
+  border:0;border-radius:18px;
+  color:#fff;font-weight:800;
+}
+.theme{background:#ffb622}
+.logout{background:#ff5c76}
+
+.wrap{padding:18px}
+
+.tabs{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  background:#0c213a;
+  border:1px solid #223b58;
+  border-radius:28px;
+  padding:10px;
+  margin-bottom:20px;
+}
+.tab{
+  border:0;
+  background:transparent;
+  color:#fff;
+  padding:18px 6px;
+  font-weight:800;
+  border-radius:22px;
+}
+.tab.active{
+  background:linear-gradient(135deg,#2a8cff,#1369e7);
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+.stat{
+  min-height:185px;
+  border-radius:28px;
+  padding:19px 8px;
+  text-align:center;
+  background:#102842;
+  border:1px solid #263d57;
+  box-shadow:0 0 24px rgba(0,100,255,.12);
+}
+.ico{
+  width:70px;height:70px;
+  margin:0 auto 8px;
+  border-radius:22px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#eef6ff;
+  font-size:36px;
+}
+.stat strong{
+  display:block;
+  font-size:42px;
+}
+.stat small{font-weight:800;color:#b8c8dc}
+
+.buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin:20px 0;
+}
+.bigbtn{
+  border:0;
+  padding:22px 10px;
+  border-radius:25px;
+  color:#fff;
+  font-size:17px;
+  font-weight:900;
+}
+.refresh{background:linear-gradient(135deg,#21c5ed,#1577ff)}
+.push{background:linear-gradient(135deg,#d53aff,#8b2dde)}
+
+.complaint{
+  background:#10243d;
+  border:1px solid #29405a;
+  border-radius:28px;
+  padding:20px;
+  margin-bottom:18px;
+}
+.rowhead{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+.cid{
+  color:#1678ec;
+  font-size:28px;
+  font-weight:900;
+}
+.status{
+  padding:14px 22px;
+  border-radius:25px;
+  color:#312100;
+  background:#ffe27f;
+  font-weight:900;
+}
+.field{
+  margin-top:14px;
+  padding:15px;
+  background:#102a46;
+  border:1px solid #2a4059;
+  border-radius:18px;
+  font-size:17px;
+}
+.photo{
+  width:100%;
+  border-radius:16px;
+  margin-top:12px;
+}
+.workbtn{
+  width:100%;
+  border:0;
+  border-radius:18px;
+  padding:15px;
+  margin-top:12px;
+  color:#fff;
+  font-weight:900;
+  background:#1677ff;
+}
+.complete{background:#13a15a}
+
+.pager{
+  display:grid;
+  grid-template-columns:1fr 100px 1fr;
+  gap:10px;
+  align-items:center;
+}
+.pager button{
+  padding:18px;
+  border:0;
+  border-radius:20px;
+  background:#176cda;
+  color:#fff;
+  font-weight:900;
+}
+.page{text-align:center;font-weight:900}
+
+.bottom{
+  position:fixed;
+  bottom:0;left:50%;
+  transform:translateX(-50%);
+  width:min(760px,100%);
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  background:#0d2138;
+  border-top:1px solid #29405a;
+  padding:12px 8px;
+}
+.nav{
+  border:0;background:transparent;
+  color:#d9e6f5;
+  padding:10px 2px;
+  font-weight:800;
+}
+.nav.active{
+  background:#176fe2;
+  border-radius:18px;
+  color:#fff;
+}
+.login{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.loginbox{
+  width:100%;
+  max-width:420px;
+  padding:28px;
+  background:#10243d;
+  border-radius:28px;
+}
+.loginbox input{
+  width:100%;
+  padding:16px;
+  margin:8px 0;
+  border:0;border-radius:14px;
+  font-size:17px;
+}
+.loginbox button{
+  width:100%;
+  padding:16px;
+  border:0;border-radius:14px;
+  margin-top:10px;
+  background:#1677ff;color:#fff;font-weight:900;
+}
+.hidden{display:none!important}
+
+@media(max-width:600px){
+  .stats{gap:7px}
+  .stat{min-height:165px;padding:14px 4px}
+  .ico{width:58px;height:58px;font-size:30px}
+  .stat strong{font-size:34px}
+  .title h2{font-size:20px}
+  .logo{width:88px;height:78px}
+}
+</style>
+</head>
+
+<body>
+
+<div id="loginPage" class="login">
+  <div class="loginbox">
+    <h1>🔧 SNS Technician</h1>
+    <p>Maintenance Operations</p>
+
+    <input id="phone" type="tel" placeholder="Mobile Number">
+    <input id="pin" type="password" placeholder="PIN">
+
+    <button onclick="login()">Login</button>
+    <p id="loginMsg"></p>
+  </div>
+</div>
+
+<div id="mainApp" class="app hidden">
+
+  <div class="top">
+    <div class="head">
+
+      <img class="logo"
+           src="icon-192.png"
+           alt="SNS">
+
+      <div class="title">
+        <h2>SNS Technician App</h2>
+        <p>Maintenance Operations</p>
+        <div id="techName">Technician</div>
+      </div>
+
+      <div class="actions">
+        <button class="smallbtn theme">☀️</button>
+        <button class="smallbtn logout" onclick="logout()">Logout</button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <div class="tabs">
+      <button class="tab active" onclick="setFilter('all',this)">▦ All</button>
+      <button class="tab" onclick="setFilter('my',this)">♙ My Work</button>
+      <button class="tab" onclick="setFilter('open',this)">⌛ Open</button>
+      <button class="tab" onclick="setFilter('done',this)">✓ Completed</button>
+    </div>
+
+    <div class="stats">
+
+      <div class="stat">
+        <div class="ico">▦</div>
+        <strong id="allCount">0</strong>
+        <small>ALL</small>
+      </div>
+
+      <div class="stat">
+        <div class="ico">⌛</div>
+        <strong id="openCount">0</strong>
+        <small>OPEN</small>
+      </div>
+
+      <div class="stat">
+        <div class="ico">●</div>
+        <strong id="myCount">0</strong>
+        <small>ASSIGNED TO ME</small>
+      </div>
+
+      <div class="stat">
+        <div class="ico">✅</div>
+        <strong id="doneCount">0</strong>
+        <small>COMPLETED</small>
+      </div>
+
+    </div>
+
+    <div class="buttons">
+      <button class="bigbtn refresh" onclick="render()">🔄 Refresh</button>
+      <button class="bigbtn push" onclick="enablePush()">🔔 Enable Screen-Off Alerts</button>
+    </div>
+
+    <div id="pushStatus"></div>
+
+    <div id="complaints"></div>
+
+    <div class="pager">
+      <button onclick="prevPage()">◀ Previous</button>
+      <div class="page" id="pageInfo">1 / 1</div>
+      <button onclick="nextPage()">Next ▶</button>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="bottom hidden" id="bottomNav">
+  <button class="nav active">▦<br>Dashboard</button>
+  <button class="nav">▣<br>Complaints</button>
+  <button class="nav">♙<br>My Work</button>
+  <button class="nav">●<br>Profile</button>
+</div>
+
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  query,
+  where,
+  onSnapshot,
+  doc,
+  updateDoc,
+  setDoc
+}
+from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+
+import {
+  getMessaging,
+  getToken,
+  onMessage
+}
+from "https://www.gstatic.com/firebasejs/12.16.0/firebase-messaging.js";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDJVPZFRkzWKJ58cyIfaiuPqdvY4cYYzvE",
+  authDomain: "sns-maintenance-pwa.firebaseapp.com",
+  projectId: "sns-maintenance-pwa",
+  storageBucket: "sns-maintenance-pwa.firebasestorage.app",
+  messagingSenderId: "683218813920",
+  appId: "1:683218813920:web:a091496adb477c47502185"
+};
+
+
+/* Firebase Cloud Messaging Web Push certificate key यहाँ डालें */
+const VAPID_KEY = "BAC5d1x13WjnMMSiJQKMCVXYCN4HdeMg4bzCu3Mbj14SfFJtvs3dg2AgBvFWGRW_GaFFg0cnNZNyfr5tjclcots";
+
+
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getFirestore(firebaseApp);
+const messaging = getMessaging(firebaseApp);
+
+let technician = null;
+let allComplaints = [];
+let filter = "all";
+let page = 1;
+const perPage = 1;
+
+
+/* LOGIN */
+
+window.login = async function(){
+
+  const phone =
+    document.getElementById("phone").value.trim();
+
+  const pin =
+    document.getElementById("pin").value.trim();
+
+  const msg =
+    document.getElementById("loginMsg");
+
+  if(!phone || !pin){
+    msg.innerText = "Mobile number और PIN डालें";
+    return;
+  }
+
+  try{
+
+    const q = query(
+      collection(db,"technicians"),
+      where("phone","==",phone),
+      where("pin","==",pin)
+    );
+
+    const s = await getDocs(q);
+
+    if(s.empty){
+      msg.innerText = "Wrong mobile number or PIN";
+      return;
+    }
+
+    const d = s.docs[0];
+
+    technician = {
+      id:d.id,
+      ...d.data()
+    };
+
+    localStorage.setItem(
+      "snsTechnician",
+      JSON.stringify(technician)
+    );
+
+    openApp();
+
+  }catch(e){
+    msg.innerText = e.message;
+  }
+};
+
+
+/* OPEN APP */
+
+function openApp(){
+
+  document.getElementById("loginPage")
+    .classList.add("hidden");
+
+  document.getElementById("mainApp")
+    .classList.remove("hidden");
+
+  document.getElementById("bottomNav")
+    .classList.remove("hidden");
+
+  document.getElementById("techName")
+    .innerText = technician.name || "Technician";
+
+  listenComplaints();
+}
+
+
+/* COMPLAINT REALTIME */
+
+function listenComplaints(){
+
+  onSnapshot(
+    collection(db,"complaints"),
+    snap=>{
+
+      allComplaints = snap.docs.map(d=>({
+        id:d.id,
+        ...d.data()
+      }));
+
+      allComplaints.sort((a,b)=>{
+        const x=a.createdAt?.seconds||0;
+        const y=b.createdAt?.seconds||0;
+        return y-x;
+      });
+
+      updateCounts();
+      render();
+    }
+  );
+}
+
+
+/* COUNTERS */
+
+function updateCounts(){
+
+  allCount.innerText =
+    allComplaints.length;
+
+  openCount.innerText =
+    allComplaints.filter(c =>
+      c.status !== "Completed"
+    ).length;
+
+  myCount.innerText =
+    allComplaints.filter(c =>
+      c.assignedPhone === technician.phone &&
+      c.status !== "Completed"
+    ).length;
+
+  doneCount.innerText =
+    allComplaints.filter(c =>
+      c.status === "Completed"
+    ).length;
+}
+
+
+/* FILTER */
+
+window.setFilter = function(f,button){
+
+  filter=f;
+  page=1;
+
+  document.querySelectorAll(".tab")
+    .forEach(x=>x.classList.remove("active"));
+
+  button.classList.add("active");
+
+  render();
+};
+
+
+/* FILTERED DATA */
+
+function filtered(){
+
+  if(filter==="my"){
+    return allComplaints.filter(c =>
+      c.assignedPhone === technician.phone
+    );
+  }
+
+  if(filter==="open"){
+    return allComplaints.filter(c =>
+      c.status !== "Completed"
+    );
+  }
+
+  if(filter==="done"){
+    return allComplaints.filter(c =>
+      c.status === "Completed"
+    );
+  }
+
+  return allComplaints;
+}
+
+
+/* RENDER */
+
+window.render = function(){
+
+  const data=filtered();
+
+  const totalPages =
+    Math.max(1,Math.ceil(data.length/perPage));
+
+  if(page>totalPages) page=totalPages;
+
+  pageInfo.innerText =
+    page+" / "+totalPages;
+
+  const start=(page-1)*perPage;
+  const list=data.slice(start,start+perPage);
+
+  complaints.innerHTML="";
+
+  if(!list.length){
+    complaints.innerHTML =
+      '<div class="complaint">No complaints found</div>';
+    return;
+  }
+
+  list.forEach(c=>{
+
+    const assigned =
+      c.assignedName || "Not Assigned";
+
+    const photo =
+      c.photoUrl
+      ? `<img class="photo" src="${esc(c.photoUrl)}">`
+      : "";
+
+    complaints.innerHTML += `
+
+      <div class="complaint">
+
+        <div class="rowhead">
+          <div class="cid">🔧 ${esc(c.complaintId || c.id)}</div>
+          <div class="status">${esc(c.status || "Pending")}</div>
+        </div>
+
+        <div class="field">
+          📍 <b>Location:</b>
+          ${esc(c.location || "")}
+          ${c.room ? " • "+esc(c.room) : ""}
+        </div>
+
+        <div class="field">
+          🛠 <b>Nature:</b>
+          ${esc(c.nature || "")}
+        </div>
+
+        <div class="field">
+          📝 <b>Work:</b>
+          ${esc(c.description || "")}
+        </div>
+
+        <div class="field">
+          👨‍🔧 <b>Assigned:</b>
+          ${esc(assigned)}
+        </div>
+
+        ${photo}
+
+        ${
+          !c.assignedPhone
+          ? `<button class="workbtn"
+              onclick="assignMe('${c.id}')">
+              Assign To Me
+             </button>`
+          : ""
+        }
+
+        ${
+          c.assignedPhone===technician.phone &&
+          c.status!=="Completed"
+          ? `
+             <button class="workbtn"
+               onclick="startWork('${c.id}')">
+               ▶ Start Work
+             </button>
+
+             <button class="workbtn complete"
+               onclick="completeWork('${c.id}')">
+               ✅ Complete + Photo
+             </button>
+            `
+          : ""
+        }
+
+      </div>
+    `;
+  });
+}
+
+
+/* ASSIGN */
+
+window.assignMe = async function(id){
+
+  await updateDoc(
+    doc(db,"complaints",id),
+    {
+      assignedName:technician.name,
+      assignedPhone:technician.phone,
+      status:"Assigned"
+    }
+  );
+};
+
+
+/* START */
+
+window.startWork = async function(id){
+
+  await updateDoc(
+    doc(db,"complaints",id),
+    {
+      status:"In Progress"
+    }
+  );
+};
+
+
+/* COMPLETE PHOTO
+   अभी फोटो preview/Data URL save होगा.
+   अगला step में Google Drive upload जोड़ेंगे.
+*/
+
+window.completeWork = function(id){
+
+  const input=document.createElement("input");
+
+  input.type="file";
+  input.accept="image/*";
+  input.capture="environment";
+
+  input.onchange=async()=>{
+
+    const file=input.files[0];
+
+    if(!file) return;
+
+    alert(
+      "Photo selected ✅\n"+
+      "अगले step में Google Drive upload जोड़ेंगे."
+    );
+
+    await updateDoc(
+      doc(db,"complaints",id),
+      {
+        status:"Completed",
+        completedBy:technician.name,
+        completedAt:new Date()
+      }
+    );
+  };
+
+  input.click();
+};
+
+
+/* PUSH */
+
+window.enablePush = async function(){
+
+  try{
+
+    const permission =
+      await Notification.requestPermission();
+
+    if(permission!=="granted"){
+      alert("Notification permission Allow करें");
+      return;
+    }
+
+    const registration =
+      await navigator.serviceWorker.register(
+        "./firebase-messaging-sw.js"
+      );
+
+    const token =
+      await getToken(messaging,{
+        vapidKey:VAPID_KEY,
+        serviceWorkerRegistration:registration
+      });
+
+    if(!token){
+      alert("Push token नहीं मिला");
+      return;
+    }
+
+    await setDoc(
+      doc(db,"pushTokens",technician.phone),
+      {
+        token,
+        phone:technician.phone,
+        name:technician.name,
+        updatedAt:new Date()
+      },
+      {merge:true}
+    );
+
+    pushStatus.innerHTML =
+      "✅ Screen-Off Push Token Registered";
+
+    alert("Screen-Off Alerts Enabled ✅");
+
+  }catch(e){
+
+    console.error(e);
+    alert("Push error: "+e.message);
+  }
+};
+
+
+/* FOREGROUND PUSH */
+
+onMessage(messaging,payload=>{
+
+  const title =
+    payload.notification?.title ||
+    "🚨 New Complaint";
+
+  const body =
+    payload.notification?.body ||
+    "New maintenance complaint received";
+
+  if(Notification.permission==="granted"){
+    new Notification(title,{
+      body,
+      icon:"icon-192.png"
+    });
+  }
+});
+
+
+/* PAGER */
+
+window.nextPage=function(){
+
+  const pages =
+    Math.max(
+      1,
+      Math.ceil(filtered().length/perPage)
+    );
+
+  if(page<pages){
+    page++;
+    render();
+  }
+};
+
+window.prevPage=function(){
+
+  if(page>1){
+    page--;
+    render();
+  }
+};
+
+
+/* LOGOUT */
+
+window.logout=function(){
+
+  localStorage.removeItem("snsTechnician");
+  location.reload();
+};
+
+
+/* SAFE TEXT */
+
+function esc(v){
+
+  return String(v??"")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;");
+}
+
+
+/* AUTO LOGIN */
+
+const saved =
+  localStorage.getItem("snsTechnician");
+
+if(saved){
+
+  try{
+    technician=JSON.parse(saved);
+    openApp();
+  }catch(e){}
+}
+
+</script>
+
+</body>
+</html>
