@@ -8,38 +8,54 @@
 
 <style>
 *{box-sizing:border-box}
+
 body{
   margin:0;
   font-family:Arial,sans-serif;
   background:#07182b;
   color:white;
 }
+
 .header{
   padding:25px 18px;
   text-align:center;
   background:linear-gradient(135deg,#0757b8,#7431df);
   border-radius:0 0 30px 30px;
 }
-.header h1{margin:5px;font-size:25px}
-.header p{margin:5px;color:#d8e6ff}
+
+.header h1{
+  margin:5px;
+  font-size:25px;
+}
+
+.header p{
+  margin:5px;
+  color:#d8e6ff;
+}
+
 .wrap{
   max-width:650px;
   margin:auto;
   padding:18px;
 }
+
 .card{
   background:#10243d;
   border:1px solid #29405a;
   border-radius:25px;
   padding:20px;
 }
+
 label{
   display:block;
   margin-top:15px;
   margin-bottom:6px;
   font-weight:bold;
 }
-input,select,textarea{
+
+input,
+select,
+textarea{
   width:100%;
   padding:15px;
   border:1px solid #36506c;
@@ -48,10 +64,12 @@ input,select,textarea{
   color:white;
   font-size:16px;
 }
+
 textarea{
   min-height:100px;
   resize:vertical;
 }
+
 .photoBox{
   margin-top:15px;
   padding:18px;
@@ -59,6 +77,7 @@ textarea{
   border-radius:18px;
   text-align:center;
 }
+
 #preview{
   display:none;
   width:100%;
@@ -67,6 +86,7 @@ textarea{
   border-radius:15px;
   margin-top:12px;
 }
+
 .submit{
   width:100%;
   padding:17px;
@@ -78,7 +98,11 @@ textarea{
   font-size:18px;
   font-weight:900;
 }
-.submit:disabled{opacity:.5}
+
+.submit:disabled{
+  opacity:.5;
+}
+
 .success{
   display:none;
   margin-top:20px;
@@ -100,222 +124,479 @@ textarea{
 
 <div class="wrap">
 
-<div class="card">
+  <div class="card">
 
-<label>Name / Department *</label>
-<input id="name" placeholder="Your name / department">
+    <label>Name / Department *</label>
+    <input
+      id="name"
+      placeholder="Your name / department">
 
-<label>Nature Of Complaint *</label>
-<select id="nature">
-  <option value="">Select Complaint</option>
-  <option>Electrical</option>
-  <option>Plumbing</option>
-  <option>AC / HVAC</option>
-  <option>Carpentry</option>
-  <option>Civil</option>
-  <option>IT / Projector</option>
-  <option>Housekeeping</option>
-  <option>Other</option>
-</select>
+    <label>Nature Of Complaint *</label>
+    <select id="nature">
+      <option value="">Select Complaint</option>
+      <option>Electrical</option>
+      <option>Plumbing</option>
+      <option>AC / HVAC</option>
+      <option>Carpentry</option>
+      <option>Civil</option>
+      <option>IT / Projector</option>
+      <option>Housekeeping</option>
+      <option>Other</option>
+    </select>
 
-<label>Location *</label>
-<select id="location">
-  <option value="">Select Location</option>
-  <option>Junior Block</option>
-  <option>Middle Block</option>
-  <option>Senior Block</option>
-  <option>Admin Block</option>
-  <option>IC Block</option>
-  <option>Kitchen</option>
-  <option>CGC</option>
-  <option>Music</option>
-  <option>EY</option>
-  <option>MY</option>
-  <option>Other</option>
-</select>
+    <label>Location *</label>
+    <select id="location">
+      <option value="">Select Location</option>
+      <option>Junior Block</option>
+      <option>Middle Block</option>
+      <option>Senior Block</option>
+      <option>Admin Block</option>
+      <option>IC Block</option>
+      <option>Kitchen</option>
+      <option>CGC</option>
+      <option>Music</option>
+      <option>EY</option>
+      <option>MY</option>
+      <option>Other</option>
+    </select>
 
-<label>Floor / Room No / Other</label>
-<input id="room" placeholder="Example: 2nd Floor, Room 63">
+    <label>Floor / Room No / Other</label>
+    <input
+      id="room"
+      placeholder="Example: 2nd Floor, Room 63">
 
-<label>Complaint Description *</label>
-<textarea id="description"
- placeholder="Please describe the problem"></textarea>
+    <label>Complaint Description *</label>
+    <textarea
+      id="description"
+      placeholder="Please describe the problem"></textarea>
 
-<div class="photoBox">
-  <b>📷 Complaint Photo</b>
-  <p>Camera या Gallery से photo चुनें</p>
+    <div class="photoBox">
+      <b>📷 Complaint Photo</b>
+      <p>Camera या Gallery से photo चुनें</p>
 
-  <input
-    id="photo"
-    type="file"
-    accept="image/*"
-    capture="environment">
+      <input
+        id="photo"
+        type="file"
+        accept="image/*"
+        capture="environment">
 
-  <img id="preview">
-</div>
+      <img
+        id="preview"
+        alt="Complaint Photo Preview">
+    </div>
 
-<button id="submitBtn"
- class="submit"
- onclick="submitComplaint()">
- 🚨 Submit Complaint
-</button>
+    <button
+      id="submitBtn"
+      class="submit"
+      onclick="submitComplaint()">
+      🚨 Submit Complaint
+    </button>
 
-<div id="success" class="success">
-  <h2>✅ Complaint Received</h2>
-  <p>Your Complaint ID:</p>
-  <h1 id="complaintNumber"></h1>
-  <p>Maintenance team has been notified.</p>
-</div>
+    <div
+      id="success"
+      class="success">
 
-</div>
+      <h2>✅ Complaint Received</h2>
+
+      <p>Your Complaint ID:</p>
+
+      <h1 id="complaintNumber"></h1>
+
+      <p>
+        Maintenance team has been notified.
+      </p>
+    </div>
+
+  </div>
+
 </div>
 
 
 <script type="module">
 
-import { initializeApp }
+import {
+  initializeApp
+}
 from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
 
 import {
- getFirestore,
- collection,
- addDoc,
- serverTimestamp
+  getFirestore,
+  collection,
+  addDoc,
+  serverTimestamp
 }
 from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 
+/* ==============================
+   FIREBASE
+============================== */
+
 const firebaseConfig = {
-  apiKey: "AIzaSyDJVPZFRkzWKJ58cyIfaiuPqdvY4cYYzvE",
-  authDomain: "sns-maintenance-pwa.firebaseapp.com",
-  projectId: "sns-maintenance-pwa",
-  storageBucket: "sns-maintenance-pwa.firebasestorage.app",
-  messagingSenderId: "683218813920",
-  appId: "1:683218813920:web:a091496adb477c47502185"
+
+  apiKey:
+  "AIzaSyDJVPZFRkzWKJ58cyIfaiuPqdvY4cYYzvE",
+
+  authDomain:
+  "sns-maintenance-pwa.firebaseapp.com",
+
+  projectId:
+  "sns-maintenance-pwa",
+
+  storageBucket:
+  "sns-maintenance-pwa.firebasestorage.app",
+
+  messagingSenderId:
+  "683218813920",
+
+  appId:
+  "1:683218813920:web:a091496adb477c47502185"
+
 };
 
-const app=initializeApp(firebaseConfig);
-const db=getFirestore(app);
+
+/* ==============================
+   GOOGLE APPS SCRIPT PHOTO API
+============================== */
+
+const PHOTO_UPLOAD_API =
+"https://script.google.com/macros/s/AKfycbz4h-UjwEMA0JNUQA2c4OJlJ_X8vK05-_R-n4NGO9kWb4D9tJ5jnr5-rQLm6oSf6A/exec";
 
 
-/* PHOTO PREVIEW */
+const app =
+initializeApp(firebaseConfig);
 
-const photoInput=document.getElementById("photo");
-
-photoInput.addEventListener("change",()=>{
-
- const file=photoInput.files[0];
-
- if(!file) return;
-
- const preview=document.getElementById("preview");
-
- preview.src=URL.createObjectURL(file);
- preview.style.display="block";
-
-});
+const db =
+getFirestore(app);
 
 
-/* CREATE COMPLAINT */
+/* ==============================
+   PHOTO PREVIEW
+============================== */
 
-window.submitComplaint=async function(){
+const photoInput =
+document.getElementById("photo");
 
- const name=
-   document.getElementById("name").value.trim();
+photoInput.addEventListener(
+  "change",
+  function(){
 
- const nature=
-   document.getElementById("nature").value;
+    const file =
+    photoInput.files[0];
 
- const location=
-   document.getElementById("location").value;
+    if(!file){
+      return;
+    }
 
- const room=
-   document.getElementById("room").value.trim();
+    const preview =
+    document.getElementById(
+      "preview"
+    );
 
- const description=
-   document.getElementById("description").value.trim();
+    preview.src =
+    URL.createObjectURL(file);
 
- const photo=
-   document.getElementById("photo").files[0];
-
-
- if(!name || !nature || !location || !description){
-
-   alert("Please fill all required fields");
-   return;
- }
-
-
- const button=document.getElementById("submitBtn");
-
- button.disabled=true;
- button.innerText="Submitting...";
+    preview.style.display =
+    "block";
+  }
+);
 
 
- try{
+/* ==============================
+   FILE TO BASE64
+============================== */
 
-   /*
-      Photo upload अगले step में Google Drive
-      Apps Script से जोड़ा जाएगा.
+function fileToBase64(file){
 
-      अभी complaint database में save होगी.
-   */
+  return new Promise(
+    function(resolve,reject){
 
-   const complaintId=
-     "CMP-"+Date.now().toString().slice(-6);
+      const reader =
+      new FileReader();
 
+      reader.onload =
+      function(){
 
-   await addDoc(
-     collection(db,"complaints"),
-     {
-       complaintId:complaintId,
+        const result =
+        String(
+          reader.result || ""
+        );
 
-       requester:name,
+        const base64 =
+        result.includes(",")
+        ? result.split(",")[1]
+        : result;
 
-       nature:nature,
+        resolve(base64);
+      };
 
-       location:location,
+      reader.onerror =
+      reject;
 
-       room:room,
-
-       description:description,
-
-       status:"Pending",
-
-       assignedName:"",
-
-       assignedPhone:"",
-
-       photoUrl:"",
-
-       hasPhoto:!!photo,
-
-       createdAt:serverTimestamp()
-     }
-   );
+      reader.readAsDataURL(file);
+    }
+  );
+}
 
 
-   document.getElementById("complaintNumber")
-     .innerText=complaintId;
+/* ==============================
+   SUBMIT COMPLAINT
+============================== */
 
-   document.getElementById("success")
-     .style.display="block";
+window.submitComplaint =
+async function(){
 
-   button.style.display="none";
+  const name =
+  document
+  .getElementById("name")
+  .value
+  .trim();
 
 
- }catch(error){
+  const nature =
+  document
+  .getElementById("nature")
+  .value;
 
-   console.error(error);
 
-   alert(
-     "Complaint submit error: "+
-     error.message
-   );
+  const location =
+  document
+  .getElementById("location")
+  .value;
 
-   button.disabled=false;
-   button.innerText="🚨 Submit Complaint";
- }
+
+  const room =
+  document
+  .getElementById("room")
+  .value
+  .trim();
+
+
+  const description =
+  document
+  .getElementById("description")
+  .value
+  .trim();
+
+
+  const photo =
+  document
+  .getElementById("photo")
+  .files[0];
+
+
+  if(
+    !name ||
+    !nature ||
+    !location ||
+    !description
+  ){
+
+    alert(
+      "Please fill all required fields"
+    );
+
+    return;
+  }
+
+
+  const button =
+  document.getElementById(
+    "submitBtn"
+  );
+
+
+  button.disabled =
+  true;
+
+
+  button.innerText =
+  "Submitting...";
+
+
+  try{
+
+
+    /* Complaint ID */
+
+    const complaintId =
+    "CMP-" +
+    Date.now()
+    .toString()
+    .slice(-6);
+
+
+    let photoUrl =
+    "";
+
+
+    /* ==============================
+       PHOTO UPLOAD
+    ============================== */
+
+    if(photo){
+
+      button.innerText =
+      "Uploading Photo...";
+
+
+      const base64 =
+      await fileToBase64(
+        photo
+      );
+
+
+      const response =
+      await fetch(
+        PHOTO_UPLOAD_API,
+        {
+
+          method:"POST",
+
+          body:
+          JSON.stringify({
+
+            complaintId:
+            complaintId,
+
+            mimeType:
+            photo.type ||
+            "image/jpeg",
+
+            base64:
+            base64
+
+          })
+
+        }
+      );
+
+
+      const result =
+      await response.json();
+
+
+      if(
+        !result.success
+      ){
+
+        throw new Error(
+          result.error ||
+          "Photo upload failed"
+        );
+      }
+
+
+      photoUrl =
+      result.url || "";
+    }
+
+
+    /* ==============================
+       SAVE TO FIRESTORE
+    ============================== */
+
+    button.innerText =
+    "Saving Complaint...";
+
+
+    await addDoc(
+
+      collection(
+        db,
+        "complaints"
+      ),
+
+      {
+
+        complaintId:
+        complaintId,
+
+        requester:
+        name,
+
+        nature:
+        nature,
+
+        location:
+        location,
+
+        room:
+        room,
+
+        description:
+        description,
+
+        status:
+        "Pending",
+
+        assignedName:
+        "",
+
+        assignedPhone:
+        "",
+
+        photoUrl:
+        photoUrl,
+
+        hasPhoto:
+        Boolean(photo),
+
+        createdAt:
+        serverTimestamp()
+
+      }
+
+    );
+
+
+    /* ==============================
+       SUCCESS
+    ============================== */
+
+    document
+    .getElementById(
+      "complaintNumber"
+    )
+    .innerText =
+    complaintId;
+
+
+    document
+    .getElementById(
+      "success"
+    )
+    .style.display =
+    "block";
+
+
+    button.style.display =
+    "none";
+
+
+  }
+  catch(error){
+
+
+    console.error(
+      error
+    );
+
+
+    alert(
+      "Complaint submit error: " +
+      error.message
+    );
+
+
+    button.disabled =
+    false;
+
+
+    button.innerText =
+    "🚨 Submit Complaint";
+
+  }
 
 };
 
