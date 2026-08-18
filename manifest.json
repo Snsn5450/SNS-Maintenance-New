@@ -1,0 +1,25 @@
+{
+  "name": "SNS Technician App",
+  "short_name": "SNS Tech",
+  "description": "Shiv Nadar School Maintenance Technician App",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#07182b",
+  "theme_color": "#0d63d8",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
