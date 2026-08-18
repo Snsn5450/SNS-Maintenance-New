@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0d63d8">
+<title>SNS Maintenance Complaint</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#07182b;
+  color:white;
+}
+.header{
+  padding:25px 18px;
+  text-align:center;
+  background:linear-gradient(135deg,#0757b8,#7431df);
+  border-radius:0 0 30px 30px;
+}
+.header h1{margin:5px;font-size:25px}
+.header p{margin:5px;color:#d8e6ff}
+.wrap{
+  max-width:650px;
+  margin:auto;
+  padding:18px;
+}
+.card{
+  background:#10243d;
+  border:1px solid #29405a;
+  border-radius:25px;
+  padding:20px;
+}
+label{
+  display:block;
+  margin-top:15px;
+  margin-bottom:6px;
+  font-weight:bold;
+}
+input,select,textarea{
+  width:100%;
+  padding:15px;
+  border:1px solid #36506c;
+  border-radius:14px;
+  background:#0d2037;
+  color:white;
+  font-size:16px;
+}
+textarea{
+  min-height:100px;
+  resize:vertical;
+}
+.photoBox{
+  margin-top:15px;
+  padding:18px;
+  border:2px dashed #4b78a5;
+  border-radius:18px;
+  text-align:center;
+}
+#preview{
+  display:none;
+  width:100%;
+  max-height:300px;
+  object-fit:contain;
+  border-radius:15px;
+  margin-top:12px;
+}
+.submit{
+  width:100%;
+  padding:17px;
+  margin-top:20px;
+  border:0;
+  border-radius:17px;
+  background:linear-gradient(135deg,#1f91ff,#6b37ed);
+  color:white;
+  font-size:18px;
+  font-weight:900;
+}
+.submit:disabled{opacity:.5}
+.success{
+  display:none;
+  margin-top:20px;
+  padding:20px;
+  text-align:center;
+  background:#123d2d;
+  border:1px solid #21a366;
+  border-radius:18px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <h1>🔧 SNS Maintenance</h1>
+  <p>Maintenance Complaint Form</p>
+</div>
+
+<div class="wrap">
+
+<div class="card">
+
+<label>Name / Department *</label>
+<input id="name" placeholder="Your name / department">
+
+<label>Nature Of Complaint *</label>
+<select id="nature">
+  <option value="">Select Complaint</option>
+  <option>Electrical</option>
+  <option>Plumbing</option>
+  <option>AC / HVAC</option>
+  <option>Carpentry</option>
+  <option>Civil</option>
+  <option>IT / Projector</option>
+  <option>Housekeeping</option>
+  <option>Other</option>
+</select>
+
+<label>Location *</label>
+<select id="location">
+  <option value="">Select Location</option>
+  <option>Junior Block</option>
+  <option>Middle Block</option>
+  <option>Senior Block</option>
+  <option>Admin Block</option>
+  <option>IC Block</option>
+  <option>Kitchen</option>
+  <option>CGC</option>
+  <option>Music</option>
+  <option>EY</option>
+  <option>MY</option>
+  <option>Other</option>
+</select>
+
+<label>Floor / Room No / Other</label>
+<input id="room" placeholder="Example: 2nd Floor, Room 63">
+
+<label>Complaint Description *</label>
+<textarea id="description"
+ placeholder="Please describe the problem"></textarea>
+
+<div class="photoBox">
+  <b>📷 Complaint Photo</b>
+  <p>Camera या Gallery से photo चुनें</p>
+
+  <input
+    id="photo"
+    type="file"
+    accept="image/*"
+    capture="environment">
+
+  <img id="preview">
+</div>
+
+<button id="submitBtn"
+ class="submit"
+ onclick="submitComplaint()">
+ 🚨 Submit Complaint
+</button>
+
+<div id="success" class="success">
+  <h2>✅ Complaint Received</h2>
+  <p>Your Complaint ID:</p>
+  <h1 id="complaintNumber"></h1>
+  <p>Maintenance team has been notified.</p>
+</div>
+
+</div>
+</div>
+
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+
+import {
+ getFirestore,
+ collection,
+ addDoc,
+ serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDJVPZFRkzWKJ58cyIfaiuPqdvY4cYYzvE",
+  authDomain: "sns-maintenance-pwa.firebaseapp.com",
+  projectId: "sns-maintenance-pwa",
+  storageBucket: "sns-maintenance-pwa.firebasestorage.app",
+  messagingSenderId: "683218813920",
+  appId: "1:683218813920:web:a091496adb477c47502185"
+};
+
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+
+
+/* PHOTO PREVIEW */
+
+const photoInput=document.getElementById("photo");
+
+photoInput.addEventListener("change",()=>{
+
+ const file=photoInput.files[0];
+
+ if(!file) return;
+
+ const preview=document.getElementById("preview");
+
+ preview.src=URL.createObjectURL(file);
+ preview.style.display="block";
+
+});
+
+
+/* CREATE COMPLAINT */
+
+window.submitComplaint=async function(){
+
+ const name=
+   document.getElementById("name").value.trim();
+
+ const nature=
+   document.getElementById("nature").value;
+
+ const location=
+   document.getElementById("location").value;
+
+ const room=
+   document.getElementById("room").value.trim();
+
+ const description=
+   document.getElementById("description").value.trim();
+
+ const photo=
+   document.getElementById("photo").files[0];
+
+
+ if(!name || !nature || !location || !description){
+
+   alert("Please fill all required fields");
+   return;
+ }
+
+
+ const button=document.getElementById("submitBtn");
+
+ button.disabled=true;
+ button.innerText="Submitting...";
+
+
+ try{
+
+   /*
+      Photo upload अगले step में Google Drive
+      Apps Script से जोड़ा जाएगा.
+
+      अभी complaint database में save होगी.
+   */
+
+   const complaintId=
+     "CMP-"+Date.now().toString().slice(-6);
+
+
+   await addDoc(
+     collection(db,"complaints"),
+     {
+       complaintId:complaintId,
+
+       requester:name,
+
+       nature:nature,
+
+       location:location,
+
+       room:room,
+
+       description:description,
+
+       status:"Pending",
+
+       assignedName:"",
+
+       assignedPhone:"",
+
+       photoUrl:"",
+
+       hasPhoto:!!photo,
+
+       createdAt:serverTimestamp()
+     }
+   );
+
+
+   document.getElementById("complaintNumber")
+     .innerText=complaintId;
+
+   document.getElementById("success")
+     .style.display="block";
+
+   button.style.display="none";
+
+
+ }catch(error){
+
+   console.error(error);
+
+   alert(
+     "Complaint submit error: "+
+     error.message
+   );
+
+   button.disabled=false;
+   button.innerText="🚨 Submit Complaint";
+ }
+
+};
+
+</script>
+
+</body>
+</html>
